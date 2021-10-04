@@ -1,0 +1,46 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.0                                |
+|   \\  /    A nd           | Web:         http://www.extend-project.de       |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// dynamicFvMesh dynamicMotionSolverFvMesh;
+// solver velocityLaplacian;
+// diffusivity quadratic inverseDistance (blade);
+
+dynamicFvMesh rotationDeformationFvMesh;
+
+solver velocityLaplacian;
+diffusivity quadratic inverseDistance 1(interface); // What is this line used to do? What revers the 1 to? What revers the patch to?
+
+rotationDeformationFvMeshCoeffs
+{
+	coordinateSystem
+	{
+		type cylindrical;
+		origin (0 0 0);
+		axis (0 0 1);
+		direction (1 0 0);
+	}
+	rpm 
+	{
+		rotatingZone 240;
+	}
+	slider //Probably not needed!
+	{
+
+	}
+
+}
+
+// ************************************************************************* //

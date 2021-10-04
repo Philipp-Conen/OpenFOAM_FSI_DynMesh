@@ -1,0 +1,78 @@
+#!/bin/bash
+
+if [[ "$1" == "dec" ]]; then
+	echo 'Decomposing fluid ...'
+	decomposePar -region fluid > log.decomposePar.Fluid
+	echo 'Decomposing solid ...'
+	decomposePar -region solid > log.decomposePar.Solid
+	exit 0
+elif [[ "$1" == "rec" ]]; then
+	echo 'Reconstructing fluid ...'
+	reconstructPar -region fluid > log.reconstructPar.Fluid
+	echo 'Reconstructing solid ...'
+	reconstructPar -region solid > log.reconstructPar.Solid
+	exit 0
+elif [[ "$1" == "run" ]]; then
+	mpirun -np 8 solids4Foam -parallel
+	exit 0
+elif [[ "$1" == "all" ]]; then
+	echo 'Decomposing fluid ...'
+	decomposePar -region fluid > log.decomposePar.Fluid
+	echo 'Decomposing solid ...'
+	decomposePar -region solid > log.decomposePar.Solid
+	mpirun -np 8 solids4Foam -parallel
+	echo 'Reconstructing fluid ...'
+	reconstructPar -region fluid > log.reconstructPar.Fluid
+	echo 'Reconstructing solid ...'
+	reconstructPar -region solid > log.reconstructPar.Solid
+	exit 0
+elif [[ "$1" == "clean" ]]; then
+	rm -rf 0.* 1* 2* 3* 4* 5* 6* 7* 8* 9* pro* log* history*
+	exit 0
+elif [[ "$1" == "mesh" ]]; then
+	setSet -batch setBatchGgi -region fluid
+	setsToZones -noFlipMap -region fluid
+	exit 0
+elif [[ "$1" == "test" ]]; then
+	setSet -batch setBatchGgi -region fluid
+	setsToZones -noFlipMap -region fluid
+	solids4Foam
+	exit 0
+else
+    echo 'Nothing'
+    exit 0
+fi
+#runApplication setSet -batch setBatchGgi
+#runApplication setsToZones -noFlipMap
+#if [ "$WM_PROJECT" == "foam" ]
+#then
+#    if (( $(echo "$WM_PROJECT_VERSION < 4.1" |bc -l) ))
+#    then
+#        echo "Tutorial not compatible with this version of OpenFOAM"
+#        exit 0
+#    fi
+#else
+#    echo; echo "This case currently only runs in foam-extend"; echo
+#    exit 0
+#fi
+
+#    frontIn
+#    {
+#        type            ggi;
+#        nFaces          3152;
+#        startFace       443688;
+#		shadowPatch     frontOut;
+#        zone            frontInZone;
+#        bridgeOverlap   true;
+#    }
+#    frontOut
+#    {
+#        type            ggi;
+#        nFaces          3192;
+#        startFace       446840;
+#		shadowPatch     frontIn;
+#        zone            frontOutZone;
+#        bridgeOverlap   true;
+#    }
+# ----------------------------------------------------------------- end-of-file
+

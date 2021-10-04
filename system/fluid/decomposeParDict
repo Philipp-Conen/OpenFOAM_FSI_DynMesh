@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.0                                |
+|   \\  /    A nd           | Web:         http://www.extend-project.de       |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      decomposeParDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+numberOfSubdomains 2;
+
+method          metis;//scotch;
+
+//	numberOfSubdomains 8;
+//	method    patchConstrained;
+//	globalFaceZones
+//	(
+//		frontOutZone
+//		frontInZone
+//	);
+//	patchConstrainedCoeffs
+//	{
+//		method            metis;
+//		numberOfSubdomains    8;
+//		patchConstraints
+//		(
+//			(frontIn 1)
+//			(frontOut 1)
+//		);
+//	}
+//metisCoeffs
+//{
+//    processorWeights
+//    (
+//        1
+//        1
+//        1
+//        1
+//        1
+//        1
+//        1
+//        1
+//    );
+//}
+//distributed     no;
+//
+//roots
+//(
+//);
+//
+// ************************************************************************* //
